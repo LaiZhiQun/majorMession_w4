@@ -69,16 +69,15 @@
     <div id="productModal" ref="productModal" class="modal fade" tabindex="-1" aria-labelledby="productModalLabel"
       aria-hidden="true">
 
-      <product-modal :temp-product="tempProduct" :is-new="isNew" :get-products-list="getProductsList"></product-modal>
+      <product-modal :temp-product="tempProduct" :is-new="isNew" :get-products-list="getProductsList" :remove-image="removeImage"></product-modal>
 
     </div>
     <!-- 刪除 Modal -->
-    <div id="delProductModal" ref="delProductModal" class="modal fade" tabindex="-1"
-      aria-labelledby="delProductModalLabel" aria-hidden="true">
 
-      <del-component :temp-product="tempProduct" :get-products-list="getProductsList"></del-component>
 
-    </div>
+      <del-component @close-modal="closeModal" :temp-product="tempProduct" :get-products-list="getProductsList"></del-component>
+
+    
     <!-- Modal -->
   </div>
 
@@ -106,6 +105,7 @@
                 </div>
                 <div>
                   <!-- 以新增空值的方式，點擊後新增圖片欄位 -->
+                  <!-- :disabled="tempProduct.imagesUrl[tempProduct.imagesUrl.length-1]==''" -->
                   <button class="btn btn-outline-primary btn-sm d-block w-100" @click="tempProduct.imagesUrl.push('')">
                     新增更多圖片
                   </button>
@@ -191,6 +191,8 @@
   </script>
   <!-- 刪除 Modal (x-template) -->
   <script type="text/x-template" id="delProductModal">
+    <div id="delProductModal" class="modal fade" tabindex="-1"
+    aria-labelledby="delProductModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content border-0">
         <div class="modal-header bg-danger text-white">
@@ -213,7 +215,7 @@
         </div>
       </div>
     </div>
-  
+  </div>
   </script>
 
   <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.9.1/axios.min.js'

@@ -70,13 +70,20 @@ const app = createApp({
       })
     },
     removeImage(key) {
+      console.log(key);
       this.tempProduct.imagesUrl.splice(key, 1)
     },
+    closeModal(state){
+      if(state === 'del'){
+        delProductModal.hide()
+      }
+    }
   },
   mounted() {
     // 選取 產品 Modal
     productModal = new bootstrap.Modal(document.querySelector('#productModal'))
     delProductModal = new bootstrap.Modal(document.getElementById('delProductModal'));
+    // this.delProductModal = new bootstrap.Modal(this.$refs.delProductModal);
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)myToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
     axios.defaults.headers.common.Authorization = token;
     this.checkLogin()
@@ -85,7 +92,7 @@ const app = createApp({
 
 // 產品新增/編輯元件
 app.component('product-modal', {
-  props: ['tempProduct', 'isNew', 'getProductsList'],
+  props: ['tempProduct', 'isNew', 'getProductsList', 'removeImage'],
   template: `#product-modal-template`,
   methods:{
         // 更新資料，以 isNew 判斷是否為新產品
@@ -102,7 +109,8 @@ app.component('product-modal', {
               alert(res.data.message)
               productModal.hide()
               this.getProductsList()
-            }).catch(err => {
+            })
+            .catch(err => {
               alert(err.data.message)
             })
           } else {

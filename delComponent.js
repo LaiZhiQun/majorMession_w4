@@ -7,9 +7,6 @@ export default {
       api_path: 'brad5566',
     }
   },
-  mounted(){
-    this.delProductModal = new bootstrap.Modal(document.getElementById('delProductModal'));
-  },
   methods: {
     delProduct() {
       axios({
@@ -17,13 +14,13 @@ export default {
         url: `${this.url}api/${this.api_path}/admin/product/${this.tempProduct.id}`
       }).then(res => {
         alert(res.data.message)
-        delProductModal.hide()
+        this.$emit('closeModal', 'del');
         this.getProductsList()
       })
-      // .catch(err => {
-      //   console.log(err.data);
-      //   alert(err.data.message)
-      // })
+      .catch(err => {
+        console.log(err.data);
+        alert(err.data.message)
+      })
     },
-  }
+  },
 }
