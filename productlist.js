@@ -70,11 +70,10 @@ const app = createApp({
       })
     },
     removeImage(key) {
-      console.log(key);
       this.tempProduct.imagesUrl.splice(key, 1)
     },
-    closeModal(state){
-      if(state === 'del'){
+    closeModal(state) {
+      if (state === 'del') {
         delProductModal.hide()
       }
     }
@@ -94,42 +93,51 @@ const app = createApp({
 app.component('product-modal', {
   props: ['tempProduct', 'isNew', 'getProductsList', 'removeImage'],
   template: `#product-modal-template`,
-  methods:{
-        // 更新資料，以 isNew 判斷是否為新產品
-        updateProduct() {
-          if (!this.isNew) {
-            // 編輯資料 put
-            axios({
-              method: 'put',
-              url: `${url}api/${api_path}/admin/product/${this.tempProduct.id}`,
-              data: {
-                data: this.tempProduct
-              }
-            }).then(res => {
-              alert(res.data.message)
-              productModal.hide()
-              this.getProductsList()
-            })
-            .catch(err => {
-              alert(err.data.message)
-            })
-          } else {
-            // 新增資料 post
-            axios({
-              method: 'post',
-              url: `${url}api/${api_path}/admin/product`,
-              data: {
-                data: this.tempProduct
-              }
-            }).then(res => {
-              alert(res.data.message)
-              productModal.hide()
-              this.getProductsList()
-            }).catch(err => {
-              alert(err.data.message)
-            })
+  methods: {
+    // 更新資料，以 isNew 判斷是否為新產品
+    updateProduct() {
+      if (!this.isNew) {
+        // 編輯資料 put
+        axios({
+          method: 'put',
+          url: `${url}api/${api_path}/admin/product/${this.tempProduct.id}`,
+          data: {
+            data: this.tempProduct
           }
-        },
+        }).then(res => {
+          alert(res.data.message)
+          productModal.hide()
+          this.getProductsList()
+        })
+          .catch(err => {
+            alert(err.data.message)
+          })
+      } else {
+        // 新增資料 post
+        axios({
+          method: 'post',
+          url: `${url}api/${api_path}/admin/product`,
+          data: {
+            data: this.tempProduct
+          }
+        }).then(res => {
+          alert(res.data.message)
+          productModal.hide()
+          this.getProductsList()
+        }).catch(err => {
+          alert(err.data.message)
+        })
+      }
+    },
+    // 當編輯時，若該項目沒有主要圖片之外的圖片，會造成tempProduct.imagesUrl沒有陣列產生，push時會發生錯誤
+    push() {
+      if (Array.isArray(this.tempProduct.imagesUrl)) {
+        this.tempProduct.imagesUrl.push('')
+      } else if (!Array.isArray(this.tempProduct.imagesUrl)) {
+        this.tempProduct.imagesUrl = []
+        this.tempProduct.imagesUrl.push('')
+      }
+    },
   }
 })
 

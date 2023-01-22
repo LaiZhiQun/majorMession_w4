@@ -69,7 +69,7 @@
     <div id="productModal" ref="productModal" class="modal fade" tabindex="-1" aria-labelledby="productModalLabel"
       aria-hidden="true">
 
-      <product-modal :temp-product="tempProduct" :is-new="isNew" :get-products-list="getProductsList" :remove-image="removeImage"></product-modal>
+      <product-modal :temp-product="tempProduct" :is-new="isNew" :get-products-list="getProductsList" :remove-image="removeImage" ></product-modal>
 
     </div>
     <!-- 刪除 Modal -->
@@ -106,7 +106,7 @@
                 <div>
                   <!-- 以新增空值的方式，點擊後新增圖片欄位 -->
                   <!-- :disabled="tempProduct.imagesUrl[tempProduct.imagesUrl.length-1]==''" -->
-                  <button class="btn btn-outline-primary btn-sm d-block w-100" @click="tempProduct.imagesUrl.push('')">
+                  <button class="btn btn-outline-primary btn-sm d-block w-100" @click="push">
                     新增更多圖片
                   </button>
                 </div>
