@@ -106,7 +106,7 @@
                 <div>
                   <!-- 以新增空值的方式，點擊後新增圖片欄位 -->
                   <!-- :disabled="tempProduct.imagesUrl[tempProduct.imagesUrl.length-1]==''" -->
-                  <button class="btn btn-outline-primary btn-sm d-block w-100" @click="push">
+                  <button :disabled="isDisabled" class="btn btn-outline-primary btn-sm d-block w-100" @click="push">
                     新增更多圖片
                   </button>
                 </div>

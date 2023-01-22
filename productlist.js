@@ -131,14 +131,26 @@ app.component('product-modal', {
     },
     // 當編輯時，若該項目沒有主要圖片之外的圖片，會造成tempProduct.imagesUrl沒有陣列產生，push時會發生錯誤
     push() {
-      if (Array.isArray(this.tempProduct.imagesUrl)) {
-        this.tempProduct.imagesUrl.push('')
-      } else if (!Array.isArray(this.tempProduct.imagesUrl)) {
-        this.tempProduct.imagesUrl = []
-        this.tempProduct.imagesUrl.push('')
-      }
+      this.tempProduct.imagesUrl = Array.isArray(this.tempProduct.imagesUrl) ? this.tempProduct.imagesUrl : []
+      this.tempProduct.imagesUrl.push('')
+      // if (Array.isArray(this.tempProduct.imagesUrl)) {
+      //   this.tempProduct.imagesUrl.push('')
+      // } else if (!Array.isArray(this.tempProduct.imagesUrl)) {
+      //   this.tempProduct.imagesUrl = []
+      //   this.tempProduct.imagesUrl.push('')
+      // }
     },
-  }
+  },
+  computed: {
+    isDisabled() {
+      // 判斷是否為陣列
+      if (!Array.isArray(this.tempProduct.imagesUrl)) {
+        return false;
+      }
+      // 判斷陣列最後一個值是否為空字串
+      return this.tempProduct.imagesUrl.slice(-1)[0] === '';
+    }
+  },
 })
 
 app.mount('#app')
